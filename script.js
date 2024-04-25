@@ -1,13 +1,20 @@
-console.log("hello world");
+
 
 let turn = "X";
 let playBoxes = Array.from(document.querySelectorAll(".box"));
 let resetBtn = document.getElementById("resetBtn");
 let ting = new Audio("audios/ting.mp3");
-
+let gameOver = new Audio("audios/gameover.mp3");
+let bgMusic = new Audio("audios/music.mp3");
+let turnText = document.getElementById("turnText");
+let image = document.getElementById("image");
+bgMusic.loop = true;
+bgMusic.volume = 0.2;
+bgMusic.play();
 let winner;
 const changeTurn = ()=>{
     turn = turn=="X" ? "0" : "X";
+    turnText.innerHTML = turn + "'s Turn";
 }
 
 const checkWin = (box)=>{
@@ -29,22 +36,27 @@ winLogic.forEach((elem , index)=>{
     let third = document.getElementById(elem[2]);
          if( box.innerHTML == first.innerHTML && first.innerHTML == second.innerHTML && second.innerHTML == third.innerHTML && box.innerHTML != " "){
             winner = first.innerHTML;
-            first.style.backgroundColor = "red";
-            second.style.backgroundColor = "red";
-            third.style.backgroundColor = "red";
+            first.classList.add("winner");
+            second.classList.add("winner");
+            third.classList.add("winner");
+            image.style.width = "15rem";
+            gameOver.play();
     };
 })
 
 }
 
-const reset = ()=>{
-    playBoxes.forEach((box ,i)=>{
+const reset = () => {
+    playBoxes.forEach((box) => {
         box.innerHTML = "";
+        box.classList.remove("winner"); // Remove winner class
+        box.classList.remove("clicked"); // Remove clicked class
+        box.style.cursor = "pointer";
         winner = false;
-    })
-}
-
-resetBtn.addEventListener("click" , reset);
+        turnText.innerHTML = "X's Turn";
+    });
+    image.style.width = "0";
+};
 
 const isTied = ()=>{
     for(let i = 0 ; i<playBoxes.length ; i++){
@@ -53,26 +65,37 @@ const isTied = ()=>{
     return true;
 }
 
-
-playBoxes.forEach((box ,i)=>{
-    box.addEventListener('click' ,()=>{
-        if(winner)return;
-        
-        if(box.innerHTML == ""){
-            box.innerHTML = turn;
-            box.style.cursor = "not-allowed"; 
-            ting.play();
+const boxClickHandler = (event) => {
+    const box = event.target;
+    if (winner) {
+        box.style.cursor = "not-allowed";
+        turnText.innerHTML = winner + " Won the Game!";
+        return;
+    }
+    if (box.innerHTML === "") {
+        box.innerHTML = turn;
+        ting.play();
         checkWin(box);
-        if(winner){
-            console.log(winner);
-        }
-        else if(isTied())console.log("Game Ties")
         changeTurn();
-        }
-        else{
-            console.log("no space")
-        }
-    })
-})
+        if (winner) {
+            turnText.innerHTML = winner + " Won the Game!";
+            gameOver.play();
+        } else if (isTied()) {
+            turnText.innerHTML = "Game Draw! Nobody Won"
+        };
+    } else {
+        alert("already filled");
+    }
+    box.style.cursor = "not-allowed";
+}
+
+
+
+resetBtn.addEventListener("click" , reset);
+
+playBoxes.forEach((box, i) => {
+    box.addEventListener('click', boxClickHandler);
+});
+
 
 

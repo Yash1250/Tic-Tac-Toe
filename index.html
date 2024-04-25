@@ -15,20 +15,23 @@
     <main>
     <div class="container">
         <div class="playBoxes">
-            <div class="box" id="0" ></div>
-            <div class="box" id="1"></div>
-            <div class="box" id="2"></div>
-            <div class="box" id="3"></div>
+            <div class="box border_top border_left" id="0" ></div>
+            <div class="box border_top" id="1"></div>
+            <div class="box border_top border_right" id="2"></div>
+            <div class="box border_left" id="3"></div>
             <div class="box" id="4"></div>
-            <div class="box" id="5"></div>
-            <div class="box" id="6"></div>
-            <div class="box" id="7"></div>
-            <div class="box" id="8"></div>
+            <div class="box border_right" id="5"></div>
+            <div class="box border_bottom border_left" id="6"></div>
+            <div class="box border_bottom" id="7"></div>
+            <div class="box border_bottom border_right" id="8"></div>
         </div>
         <div class="resultBox">
-            <h2>X Won the Game</h2>
+            <div class="textes">
+            <h1 class="welcome">Welcome to Tic-Tac-Toe</h1>
+            <h2 id="turnText">X Won the Game</h2>
             <button id="resetBtn">Reset</button>
-            <img src="images/winning.gif" alt="winning">
+           </div>
+            <img id="image" src="images/winning.gif" alt="winning">
         </div>
     </div>
 </main>
