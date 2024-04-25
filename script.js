@@ -5,12 +5,8 @@ let playBoxes = Array.from(document.querySelectorAll(".box"));
 let resetBtn = document.getElementById("resetBtn");
 let ting = new Audio("audios/ting.mp3");
 let gameOver = new Audio("audios/gameover.mp3");
-let bgMusic = new Audio("audios/music.mp3");
 let turnText = document.getElementById("turnText");
 let image = document.getElementById("image");
-bgMusic.loop = true;
-bgMusic.volume = 0.2;
-bgMusic.play();
 let winner;
 const changeTurn = ()=>{
     turn = turn=="X" ? "0" : "X";
@@ -97,5 +93,7 @@ playBoxes.forEach((box, i) => {
     box.addEventListener('click', boxClickHandler);
 });
 
+let backgroundAudio = document.getElementById("backgroundAudio");
+backgroundAudio.volume = "0.2";
 
 
